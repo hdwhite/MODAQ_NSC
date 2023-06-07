@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
         define: {
             __BUILD_VERSION__: JSON.stringify(`${mode.startsWith("production") ? "" : "dev_"}${version}`),
         },
+		server: { host: true, port: 5000 },
     };
 
     // If we ever need to separate sersve and build, follow this pattern:

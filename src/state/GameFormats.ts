@@ -4,22 +4,9 @@ import { IGameFormat, IPowerMarker } from "./IGameFormat";
 
 const currentVersion = "2021-07-11";
 
-export const ACFGameFormat: IGameFormat = {
-    bonusesBounceBack: false,
-    displayName: "ACF",
-    minimumOvertimeQuestionCount: 1,
-    overtimeIncludesBonuses: false,
-    negValue: -5,
-    powers: [],
-    regulationTossupCount: 20,
-    timeoutsAllowed: 1,
-    pronunciationGuideMarkers: ["(", ")"],
-    version: currentVersion,
-};
-
 export const PACEGameFormat: IGameFormat = {
-    bonusesBounceBack: true,
-    displayName: "PACE (pre-2022)",
+    bonusesBounceBack: false,
+    displayName: "PACE",
     minimumOvertimeQuestionCount: 1,
     overtimeIncludesBonuses: false,
     negValue: 0,
@@ -30,33 +17,8 @@ export const PACEGameFormat: IGameFormat = {
     version: currentVersion,
 };
 
-export const StandardPowersMACFGameFormat: IGameFormat = {
-    ...createMACFGameFormat([{ marker: "(*)", points: 15 }]),
-    displayName: "mACF with powers",
-};
-
-export const UndefinedGameFormat: IGameFormat = {
-    bonusesBounceBack: false,
-    displayName: "Freeform format",
-    minimumOvertimeQuestionCount: 1,
-    overtimeIncludesBonuses: false,
-    negValue: -5,
-    powers: [{ marker: "(*)", points: 15 }],
-    regulationTossupCount: 999,
-    timeoutsAllowed: 999,
-    pronunciationGuideMarkers: ["(", ")"],
-    version: currentVersion,
-};
-
 export function getKnownFormats(): IGameFormat[] {
-    return [ACFGameFormat, StandardPowersMACFGameFormat, PACEGameFormat, UndefinedGameFormat];
-}
-
-export function createMACFGameFormat(powers: IPowerMarker[]): IGameFormat {
-    return {
-        ...ACFGameFormat,
-        powers,
-    };
+    return [PACEGameFormat];
 }
 
 export function getUpgradedFormatVersion(format: IGameFormat): IGameFormat {
@@ -69,7 +31,7 @@ export function getUpgradedFormatVersion(format: IGameFormat): IGameFormat {
     // We need to compare the fields between the given format and the current format, so we need to iterate over them.
     // This requires using the array/dictionary syntax for accessing fields, which requires using any.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const defaultFormat: any = UndefinedGameFormat as any;
+    const defaultFormat: any = PACEGameFormat as any;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const formatObject: any = format as any;

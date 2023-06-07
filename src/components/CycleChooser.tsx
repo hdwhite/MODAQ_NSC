@@ -82,7 +82,7 @@ export const CycleChooser = observer(function CycleChooser() {
                 onClick={onNextClickHandler}
                 styles={nextButtonStyle}
             >
-                Export...
+                Finish
             </PrimaryButton>
         );
     } else {
@@ -157,6 +157,7 @@ function onNextClick(appState: AppState): void {
         // If they use Sheets, show the Export Sheets dialog. Otherwise, show the Export JSON dialog
         if (appState.uiState.customExportOptions != undefined) {
             appState.handleCustomExport(StatusDisplayType.MessageDialog, "NextButton");
+            appState.uiState.dialogState.showExportToJsonDialog();
         } else if (appState.uiState.sheetsState.sheetId != undefined) {
             appState.uiState.createPendingSheet();
         } else {

@@ -37,10 +37,14 @@ export class AppState {
         if (
             this.uiState == undefined ||
             this.uiState.customExportOptions == undefined ||
-            this.game.cycles.length === 0
+            this.game.cycles.length === 0 ||
+			(this.game.hasConcluded && source == "Timer")
         ) {
             return Promise.resolve();
         }
+
+		if (source == "NextButton")
+			this.game.hasConcluded = true;
 
         const customExport: ICustomExport = this.uiState.customExportOptions;
         let exportPromise: Promise<IStatus> | undefined;
@@ -49,7 +53,7 @@ export class AppState {
                 exportPromise = customExport.onExport(CustomExport.convertGameToExportFields(this.game), { source });
                 break;
             case "QBJ":
-                exportPromise = customExport.onExport(QBJ.toQBJ(this.game, this.uiState.packetFilename), { source });
+                exportPromise = customExport.onExport(QBJ.toQBJ(this.game, this.uiState.packetFilename), this.uiState.cycleIndex, { source });
                 break;
             default:
                 assertNever(customExport);
@@ -75,7 +79,7 @@ export class AppState {
                     this.game.markUpdateComplete();
                     switch (displayType) {
                         case StatusDisplayType.MessageDialog:
-                            this.uiState.dialogState.showOKMessageDialog("Export Succeeded", "Export succeeded.");
+                           // this.uiState.dialogState.showOKMessageDialog("Export Succeeded", "Export succeeded.");
                             break;
                         case StatusDisplayType.Label:
                             this.uiState.setCustomExportStatus("Export successful.");

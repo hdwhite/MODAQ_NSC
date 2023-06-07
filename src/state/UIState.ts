@@ -178,7 +178,7 @@ export class UIState {
                 firstTeamPlayers,
                 secondTeamPlayers,
                 type: PendingGameType.Manual,
-                gameFormat: GameFormats.ACFGameFormat,
+                gameFormat: GameFormats.PACEGameFormat,
             };
         } else {
             this.pendingNewGame = {

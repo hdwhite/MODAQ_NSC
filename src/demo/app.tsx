@@ -20,6 +20,30 @@ window.onload = () => {
                 buildVersion={__BUILD_VERSION__}
                 googleClientId={demoGoogleClientId}
                 yappServiceUrl={demoYappService}
+				customExport={{
+					label: "Export!",
+					type: "QBJ",
+					customExportInterval: 10000,
+					onExport: (qbj: any, curCycle: number, source: any) => {
+						qbj.tossups_read = curCycle + 1;
+						if (source['source'] == "Timer")
+							qbj.isFinished = false;
+						else if (source['source'] == "NextButton")
+							qbj.isFinished = true;
+						else if (source['source'] == "Menu")
+							qbj.isFinished = true;
+						else if (source['source'] == "NewGame")
+							qbj.isFinished = true;
+						console.log(qbj);
+						console.log(fetch("https://draco.hdwhite.org/qb/pacensc2023/readgame.php",
+						{
+							method: 'POST',
+							body: JSON.stringify(qbj),
+							headers: { "Content-Type": "application/json" },
+						}));
+						return Promise.resolve({ isError: false, status: ""});
+					}
+				}}
             />,
             document.getElementById("root")
         );

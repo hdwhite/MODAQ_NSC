@@ -39,6 +39,7 @@ export const GameBar = observer(function GameBar(): JSX.Element {
                     // to another method
                     if (appState.uiState.customExportOptions != undefined) {
                         appState.handleCustomExport(StatusDisplayType.MessageDialog, "NewGame");
+                        appState.uiState.dialogState.showExportToJsonDialog();
                     } else if (appState.uiState.sheetsState.sheetId != undefined) {
                         exportToSheets(appState);
                     } else {
@@ -178,7 +179,7 @@ export const GameBar = observer(function GameBar(): JSX.Element {
             text: appState.uiState.customExportOptions.label,
             disabled: appState.game.cycles.length === 0,
             split: true,
-            onClick: handleCustomExport,
+/*            onClick: handleCustomExport,
             subMenuProps: {
                 items: [
                     {
@@ -195,7 +196,10 @@ export const GameBar = observer(function GameBar(): JSX.Element {
                             appState.uiState.dialogState.showExportToJsonDialog();
                         },
                     },
-                ],
+                ],*/
+            onClick: () => {
+				appState.uiState.dialogState.showExportToJsonDialog();
+                appState.handleCustomExport(StatusDisplayType.MessageDialog);
             },
         });
     }

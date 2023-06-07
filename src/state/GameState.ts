@@ -37,8 +37,8 @@ export class GameState {
 
     @format((deserializedFormat: IGameFormat) => GameFormats.getUpgradedFormatVersion(deserializedFormat))
     public gameFormat: IGameFormat;
-
     public hasUpdates: boolean;
+	public hasConcluded: boolean;
 
     constructor() {
         makeObservable(this, {
@@ -61,13 +61,15 @@ export class GameState {
             setGameFormat: action,
             removeNewPlayer: action,
             setPlayers: action,
+			hasConcluded: observable,
         });
 
         this.packet = new PacketState();
         this.players = [];
         this.cycles = [];
-        this.gameFormat = GameFormats.UndefinedGameFormat;
+        this.gameFormat = GameFormats.PACEGameFormat;
         this.hasUpdates = false;
+		this.hasConcluded = false;
 
         // Once we've filled out all the cycles, then add the update handlers to all of the cycles. This is needed
         // because we can't do this when getting data from deserialized cycles (no access to this in the decorator)
